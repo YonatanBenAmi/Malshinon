@@ -35,5 +35,30 @@ namespace IntelReport.DataBase
             }
         }
 
+        public MySqlConnection openConnection()
+        {
+            if (_conn == null)
+            {
+                _conn = new MySqlConnection(strConnection);
+            }
+
+            if (_conn.State != System.Data.ConnectionState.Open)
+            {
+                _conn.Open();
+                Console.WriteLine("Connection successful.");
+            }
+
+            return _conn;
+        }
+
+        public void closeConnection()
+        {
+            if (_conn != null && _conn.State == System.Data.ConnectionState.Open)
+            {
+                _conn.Close();
+                _conn = null;
+            }
+        }
+
     }
 }

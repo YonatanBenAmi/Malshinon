@@ -1,4 +1,6 @@
-﻿using IntelReport.DataBase;
+﻿using IntelReport.DAL;
+using IntelReport.DataBase;
+using IntelReport.Models;
 
 namespace IntelReport
 {
@@ -6,8 +8,12 @@ namespace IntelReport
     {
         static void Main(string[] args)
         {
-            BaseConnetion b1 = new BaseConnetion();
-            b1.CreateConnection();
+            dalPeople dp = new dalPeople();
+            List<People> p = dp.GetPeopleList();
+            foreach (People person in p)
+            {
+                person.printDetails();
+            }
         }
     }
 }
