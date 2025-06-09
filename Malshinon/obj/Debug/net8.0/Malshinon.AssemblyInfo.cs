@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Malshinon")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+985f132e682564e536db420eee4ae4627a794d75")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2bf7e8a2d34bf29a1a360b96735696fceebb6528")]
 [assembly: System.Reflection.AssemblyProductAttribute("Malshinon")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Malshinon")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
