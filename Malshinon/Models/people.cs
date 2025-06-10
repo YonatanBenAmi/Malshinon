@@ -2,12 +2,12 @@ namespace IntelReport.Models
 {
     public class People
     {
-        string FirstName { get; set; }
-        string LastName { get; set; }
-        string SecretCode { get; set; }
-        string Type { get; set; }
-        int NumReports { get; set; }
-        int NumMention { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string SecretCode { get; set; }
+        public string Type { get; set; }
+        public int NumReports { get; set; }
+        public int NumMention { get; set; }
 
         public People(string firstName, string lastName, string secretCode, string type, int numReports, int numMention)
         {
@@ -21,7 +21,7 @@ namespace IntelReport.Models
 
         public void printDetails()
         {
-            Console.WriteLine(FirstName, LastName);
+            Console.WriteLine($"First name: {FirstName}, Last name: {LastName}, Secret code: {SecretCode},  Type: {Type}, Num reports: {NumReports}, Num mention: {NumMention}");
         }
 
     }

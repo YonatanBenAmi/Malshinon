@@ -9,11 +9,12 @@ namespace IntelReport
         static void Main(string[] args)
         {
             dalPeople dp = new dalPeople();
-            List<People> p = dp.GetPeopleList();
-            foreach (People person in p)
-            {
-                person.printDetails();
-            }
+            // List<People> p = dp.GetPeopleList();
+            dp.AddPeople("avi", "sgakom", "4444", "both", 2, 8);
+            // foreach (People person in p)
+            // {
+            //     person.printDetails();
+            // }
         }
     }
 }
