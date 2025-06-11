@@ -11,14 +11,12 @@ namespace IntelReport.Models
         public int NumReports { get; set; }
         public int NumMention { get; set; }
 
-        public People(string firstName, string lastName, string secretCode, string type, int numReports, int numMention)
+        public People(string firstName, string lastName, string secretCode, string type)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
             this.SecretCode = secretCode;
             this.Type = type;
-            this.NumReports = numReports;
-            this.NumMention = numMention;
         }
 
         public void printDetails()

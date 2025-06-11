@@ -28,7 +28,7 @@ namespace IntelReport.DAL
                     string type = reader.GetString("type");
                     int numReports = reader.GetInt32("num_reports");
                     int numMention = reader.GetInt32("num_mentions");
-                    People onePeople = new People(firstName, lastName, secretCode, type, numReports, numMention);
+                    People onePeople = new People(firstName, lastName, secretCode, type);
                     peopleList.Add(onePeople);
                 }
             }
@@ -60,7 +60,7 @@ namespace IntelReport.DAL
                     string type = reader.GetString("type");
                     int numReports = reader.GetInt32("num_reports");
                     int numMention = reader.GetInt32("num_mentions");
-                    people = new People(firstName, lastName, secretCode, type, numReports, numMention);
+                    people = new People(firstName, lastName, secretCode, type);
                 }
             }
             catch (Exception ex)
@@ -74,9 +74,9 @@ namespace IntelReport.DAL
 
             return people;
         }
-        public void AddPeople(string firstName, string lastName, string secretCode, string type, int numReports, int numMention)
+        public void AddPeople(string firstName, string lastName, string secretCode, string type)
         {
-            People people = new People(firstName, lastName, secretCode, type, numReports, numMention);
+            People people = new People(firstName, lastName, secretCode, type);
             string query = $"INSERT INTO people (firstName, lastName, secret_code, type, num_reports, num_mentions) VALUES ('{firstName}', '{lastName}', '{secretCode}', '{type}', 0, 0)";
 
             try
@@ -104,8 +104,8 @@ namespace IntelReport.DAL
             }
 
         }
-
-        public void Update(string code, string columnName, int value)
+        
+        public void Update(string code, string columnName, int value = 1)
         {
             if (columnName != "num_reports" && columnName != "num_mentions")
             {
@@ -113,15 +113,21 @@ namespace IntelReport.DAL
             }
             else
             {
-                string query = $"UPDATE people SET {columnName} = {value} WHERE secret_code = '{code}';";
-                MySqlCommand? cmd = null;
-
                 try
                 {
                     People people = GetPeopleBySecretCode(code);
-
+                    int resultValue;
+                    if (columnName == "num_reports")
+                    {
+                        resultValue = people.NumReports++;
+                    }
+                    else
+                    {
+                        resultValue = people.NumMention++;
+                    }
+                    string query = $"UPDATE people SET {columnName} = {resultValue} WHERE secret_code = '{code}';";
                     _conn = openConnection();
-                    cmd = new MySqlCommand(query, _conn);
+                    MySqlCommand cmd = new MySqlCommand(query, _conn);
 
                     switch (columnName)
                     {
