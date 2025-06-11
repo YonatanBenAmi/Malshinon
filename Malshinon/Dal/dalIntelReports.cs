@@ -43,7 +43,6 @@ namespace IntelReport.DAL
         {
             Report report = new Report(reportId, targetId, text);
             string query = $"INSERT INTO intelreports (reporter_id, target_id, text) VALUES ({reportId}, {targetId}, '{text}');";
-
             try
             {
                 _conn = openConnection();
@@ -63,7 +62,6 @@ namespace IntelReport.DAL
             {
                 closeConnection();
             }
-
         }
     }
 }

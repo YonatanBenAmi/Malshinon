@@ -1,3 +1,5 @@
+
+
 namespace IntelReport.Models
 {
     public class People

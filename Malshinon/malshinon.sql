@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2025 at 01:46 PM
+-- Generation Time: Jun 11, 2025 at 08:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,6 +35,15 @@ CREATE TABLE `intelreports` (
   `timestamp` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `intelreports`
+--
+
+INSERT INTO `intelreports` (`id`, `reporter_id`, `target_id`, `text`, `timestamp`) VALUES
+(2, 1, 1, 'Checking', '2025-06-10 17:35:27'),
+(3, 2, 2, 'Checking', '2025-06-10 17:40:11'),
+(7, 5, 5, 'report', '2025-06-11 09:26:07');
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +59,16 @@ CREATE TABLE `people` (
   `num_reports` int(11) DEFAULT 0,
   `num_mentions` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `people`
+--
+
+INSERT INTO `people` (`id`, `firstName`, `lastName`, `secret_code`, `type`, `num_reports`, `num_mentions`) VALUES
+(1, 'Yonatan', 'Ben Ami', '123', 'reporter', 5, 56),
+(2, 'Moshe', 'Lerre', '432', 'both', 2, 8),
+(3, 'firstName', 'lastName', '111', '', 0, 0),
+(5, 'avi', 'sgakom', '4444', 'both', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -78,13 +97,13 @@ ALTER TABLE `people`
 -- AUTO_INCREMENT for table `intelreports`
 --
 ALTER TABLE `intelreports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `people`
 --
 ALTER TABLE `people`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
