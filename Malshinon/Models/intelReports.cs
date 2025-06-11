@@ -1,11 +1,18 @@
 namespace IntelReport.Models
 {
-    public class IntelReport
+    public class Report
     {
         int Id { get; }
-        string ReportId { get; set; }
-        string TargetId { get; set; }
-        string Text { get; set; }
-        string Timestamp { get; set; }
+        public int ReportId;
+        public int TargetId;
+        public string Text;
+        public DateTime Timestamp;
+
+        public Report(int repoetId, int targetId, string text)
+        {
+            this.ReportId = repoetId;
+            this.TargetId = targetId;
+            this.Text = text;
+        }
     }
 }
