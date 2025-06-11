@@ -18,7 +18,7 @@ namespace IntelReport
             // }
             DalIntelReports intel = new DalIntelReports();
             List<Report> listReport = intel.GetReportList();
-            intel.AddIntelReport(4, 4, "report");
+            intel.AddIntelReport(5, 5, "report");
         }
     }
 }
