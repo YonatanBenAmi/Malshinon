@@ -105,7 +105,7 @@ namespace IntelReport.DAL
 
         }
 
-        public void Update(string code,string columnName, int value)
+        public void Update(string code, string columnName, int value)
         {
             if (columnName != "num_reports" && columnName != "num_mentions")
             {
@@ -144,6 +144,13 @@ namespace IntelReport.DAL
                     closeConnection();
                 }
             }
+        }
+
+        public void deletePerson(string secretCode)
+        {
+            string query = $"DELETE FROM people WHERE secret_code = '{secretCode}';";
+
+            
         }
     }
 }
