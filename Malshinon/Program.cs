@@ -1,6 +1,7 @@
 ﻿using IntelReport.DAL;
 using IntelReport.DataBase;
 using IntelReport.Models;
+using IntelReport.StartReport;
 
 namespace IntelReport
 {
@@ -8,17 +9,8 @@ namespace IntelReport
     {
         static void Main(string[] args)
         {
-            // dalPeople dp = new dalPeople();
-            // dp.Update("123", "num_reports", 5);
-            // List<People> p = dp.GetPeopleList();
-            // dp.AddPeople("avi", "sgakom", "4444", "both", 2, 8);
-            // foreach (People person in p)
-            // {
-            //     person.printDetails();
-            // }
-            DalIntelReports intel = new DalIntelReports();
-            List<Report> listReport = intel.GetReportList();
-            intel.AddIntelReport(5, 5, "report");
+            Start start = new Start();
+            start.Play();
         }
     }
 }
