@@ -10,9 +10,13 @@ namespace IntelReport.StartReport
     {
         dalPeople people = new dalPeople();
         DalIntelReports report = new DalIntelReports();
+        MySqlConnection _conn = null!;
         public void Play()
         {
+            PrintMenu();
+            Console.ForegroundColor = ConsoleColor.Cyan;
             string reporterCode = GetSecretCodeInformer();//get secret code 
+            Console.ResetColor();
             if (!IsPeopleExists(reporterCode))
             {
                 AddPepoleWithCorrectType("reporter", reporterCode);
@@ -27,8 +31,12 @@ namespace IntelReport.StartReport
             int reporterId = GetId(reporterCode);
             int targetId = GetId(targetCode);
             EnterReport(reporterId, targetId, reportBody);
-            Increase(reporterCode, "num_reports");
-            Increase(targetCode, "num_mentions");
+            IncreaseNumReports(reporterCode);
+            IncreaseNumMentions(targetCode);
+            ChangeType(reporterCode);
+            ChangeType(targetCode);
+
+
         }
 
         public string GetSecretCodeInformer()
@@ -94,10 +102,197 @@ namespace IntelReport.StartReport
             report.AddIntelReport(reporterId, targetId, reportText);
         }
 
-        public void Increase(string code, string nameCol)
+        public int GetNumReports(string code)
         {
-            people.Update(code, nameCol);
+            int result = 0;
+            try
+            {
+                string query = $"SELECT p.num_reports FROM people p WHERE p.secret_code = '{code}'";
+                _conn = openConnection();
+                MySqlCommand cmd = new MySqlCommand(query, _conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    result = reader.GetInt32("num_reports");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                closeConnection();
+            }
+            return result;
         }
 
+        public int GetNumMentions(string code)
+        {
+            int result = 0;
+            try
+            {
+                string query = $"SELECT p.num_mentions FROM people p WHERE p.secret_code = '{code}'";
+                _conn = openConnection();
+                MySqlCommand cmd = new MySqlCommand(query, _conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+
+                if (reader.Read())
+                {
+                    result = reader.GetInt32("num_mentions");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                closeConnection();
+            }
+            return result;
+        }
+
+        public void IncreaseNumReports(string code)
+        {
+            int result = GetNumReports($"{code}") + 1;
+            string query = $"UPDATE people SET num_reports = {result} WHERE secret_code = '{code}';";
+
+            try
+            {
+                _conn = openConnection();
+                MySqlCommand cmd = new MySqlCommand(query, _conn);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                closeConnection();
+            }
+
+        }
+
+        public void IncreaseNumMentions(string code)
+        {
+            int result = GetNumMentions($"{code}") + 1;
+            string query = $"UPDATE people SET num_mentions = {result} WHERE secret_code = '{code}';";
+
+            try
+            {
+                _conn = openConnection();
+                MySqlCommand cmd = new MySqlCommand(query, _conn);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                closeConnection();
+            }
+
+        }
+
+        public bool IsBoth(string code)
+        {
+            if (GetNumMentions(code) > 0 && GetNumReports(code) > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+
+        public void ChangeType(string code)
+        {
+            if (IsBoth(code))
+            {
+                string query = $"UPDATE people SET type = 'Both' WHERE secret_code = '{code}';";
+
+                try
+                {
+                    _conn = openConnection();
+                    MySqlCommand cmd = new MySqlCommand(query, _conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+
+            if (GetNumReports(code) > 20)
+            {
+
+
+            }
+
+            if (GetNumMentions(code) > 10)
+            {
+                string query = $"UPDATE people SET type = 'potential_agent' WHERE secret_code = '{code}';";
+
+                try
+                {
+                    _conn = openConnection();
+                    MySqlCommand cmd = new MySqlCommand(query, _conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+            }
+        }
+
+        public void PrintMenu()
+        {
+            ConsoleKeyInfo key;
+            int option = 1;
+            bool isSelected = false;
+            (int left, int top) = Console.GetCursorPosition();
+            string color = "\u001b[32m";
+
+            while (!isSelected)
+            {
+                Console.GetCursorPosition();
+                Console.WriteLine($"{(option == 1 ? color : "")}option 1\u001b[0m");
+                Console.WriteLine($"{(option == 2 ? color : "")}option 2\u001b[0m");
+                Console.WriteLine($"{(option == 3 ? color : "")}option 3\u001b[0m");
+
+                key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.DownArrow:
+                        option = (option == 3 ? 1 : option + 1);
+                        break;
+                    case ConsoleKey.UpArrow:
+                        option = (option == 1 ? 3 : option - 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        isSelected = true;
+                        break;
+                }
+                
+                System.Console.WriteLine(option);   
+            }
+        }
+        
     }
 }
