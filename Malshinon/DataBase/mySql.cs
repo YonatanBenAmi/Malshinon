@@ -15,7 +15,6 @@ namespace IntelReport.DataBase
             {
                 this._conn = new MySqlConnection(strConnection);
                 this._conn.Open();
-                Console.WriteLine("Connection successpul!");
             }
             catch (MySqlException ex)
             {
@@ -45,7 +44,6 @@ namespace IntelReport.DataBase
             if (_conn.State != System.Data.ConnectionState.Open)
             {
                 _conn.Open();
-                Console.WriteLine("Connection successful.");
             }
 
             return _conn;
